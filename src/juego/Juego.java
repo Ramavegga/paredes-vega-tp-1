@@ -47,18 +47,16 @@ public class Juego extends InterfaceJuego
 		this.entorno.iniciar();
 		//inicia el juego
 	}
+	
 //COLISION ROCAS Y ENTORNO
 	
 	private boolean hayColision(double xNuevo, double yNuevo, int ancho, int alto, Roca[] rocas) {
 		  double mitadW = ancho / 2.0;
 		  double mitadH = alto  / 2.0;
-
-
 		    if (xNuevo < mitadW || xNuevo > 700 - mitadW  || yNuevo < mitadH || yNuevo > entorno.alto() - mitadH) {
 		        return true;
 		    }
-		    
-		for (Roca roca : rocas) {
+		  for (Roca roca : rocas) {
 			if (roca.colisionaCon(xNuevo - ancho / 2, yNuevo - alto / 2, ancho, alto)) {
 				return true;
 			}
@@ -91,8 +89,7 @@ public class Juego extends InterfaceJuego
 				  nuevaX = Math.max(MitadW, Math.min(nuevaX, entorno.ancho() - MitadW));
 				  nuevaY = Math.max(MitadH, Math.min(nuevaY, entorno.alto()  - MitadH));
 				//entorno.dibujarRectangulo(nuevaX, nuevaY, 30, 40, 0, Color.MAGENTA);
-			}
-			
+			}			
 			entorno.dibujarImagen(mago.imgFrente, mago.x, mago.y, anguloFondo, 0.08);
 		} 
 		else if (entorno.estaPresionada('a')) {
@@ -120,6 +117,7 @@ public class Juego extends InterfaceJuego
 			//entorno.dibujarRectangulo(nuevaX, nuevaY, 50, 75, 0, Color.MAGENTA);
 		}
 	}		
+	
 //MOVIMIENTO ENEMIGO
 
 	public void moverEnemigos(Enemigo i) {
