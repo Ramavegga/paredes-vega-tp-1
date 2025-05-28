@@ -1,15 +1,20 @@
 package juego;
-import java.awt.Color;
-import java.awt.Image;
 
 import entorno.Entorno;
 import entorno.Herramientas;
+
+import java.awt.Color;
+import java.awt.Image;
+
+
+
+
 public class Boton {
-	int x;
-	int y;
+	double x;
+	double y;
 	int ancho;
 	int alto;
-
+	
 		public Boton(int x, int y, int ancho, int alto) {
 			this.x = x;
 			this.y = y;
@@ -17,8 +22,14 @@ public class Boton {
 			this.alto = alto;
 		 }
 	public void dibujar(Entorno e) {
-				e.dibujarRectangulo(x, y, ancho, alto, 0, Color.blue);
-				e.cambiarFont("Arial", 18, Color.CYAN);
-				e.escribirTexto("Derecha", x, y);
+				e.dibujarRectangulo(x, y, ancho, alto, 0, Color.RED);
+				e.cambiarFont("Arial", 18, Color.ORANGE);
+				e.escribirTexto("FUEGO", x - ancho/3, y + alto/5);
  }
+	public void dibujar1(Entorno e) {
+				e.dibujarRectangulo(x, y, ancho, alto, 0, Color.BLUE);
+				e.cambiarFont("Arial", 18, Color.WHITE);
+				e.escribirTexto("AGUA",x - ancho/4, y + alto/6);
+	}
+
 }

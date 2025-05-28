@@ -9,8 +9,8 @@ import entorno.Herramientas;
 public class Roca {
 	double x;
 	double y;
-	int ancho = 35;
-	int alto = 38;
+	int ancho = 30;
+	int alto = 35;
 	Image imgRoca;
 
 	public Roca(double x, double y) {

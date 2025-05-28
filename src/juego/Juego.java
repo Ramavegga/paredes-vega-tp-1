@@ -22,6 +22,10 @@ public class Juego extends InterfaceJuego
 	double anguloFondo;
 	Roca[] rocas = new Roca[5];
 	BarraLateral barra;
+	Boton boton;
+	Boton boton1;
+	Poderes poderFuego;
+	Poderes poderAgua;
 	Juego()
 	{
 		// Inicializa el objeto entorno
@@ -39,11 +43,15 @@ public class Juego extends InterfaceJuego
 			int radio = 13;
 			enemigo[i] = new Enemigo(x, y, velocidad, angulo, radio);}
 		for (int i = 0; i < rocas.length; i++) {
-		    double x = Math.random() * 700;
+		    double x = Math.random() * 685;
 		    double y = Math.random() * 600;
 		    rocas[i] = new Roca(x, y);}
 		imgFondo = Herramientas.cargarImagen("suelo.png");
-		barra = new BarraLateral(750, 300, Color.GRAY);
+		barra = new BarraLateral(895, 300);
+		boton = new Boton(752,350, 90, 35); 
+		boton1 = new Boton(752, 390, 90, 35);
+		//poderFuego = new Poderes(x, y, radio);
+		//poderAgua = new Poderes(x, y, radio);
 		this.entorno.iniciar();
 		//inicia el juego
 	}
@@ -156,25 +164,23 @@ public class Juego extends InterfaceJuego
 		movimiento(entorno, rocas);
 		
 		for (Enemigo i : enemigo) {
-		    
 		    i.angulo = Math.atan2(mago.y - i.y, mago.x - i.x);
-		    
 		    moverEnemigos(i);
-		    
 		    if (chocasteCon(entorno)) {
 		        rebotar(i);
-		    }
+		       }
 		    dibujoEnemigos(i);
-		  
 		    acelerar(i);
 			}
-	
 		for (Roca roca : rocas) {
 		    roca.dibujar(entorno);    
-		 	}
+		  }
 		barra.dibujar(entorno);{
-		}
+	   }
+		boton.dibujar(entorno);{
+		boton1.dibujar1(entorno);
 	}
+  }
     
 	@SuppressWarnings("unused")
 	public static void main(String[] args)
