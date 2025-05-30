@@ -24,8 +24,11 @@ public class Juego extends InterfaceJuego
 	BarraLateral barra;
 	Boton boton;
 	Boton boton1;
-	Poderes poderFuego;
-	Poderes poderAgua;
+	private boolean juegoTerminado;
+	
+	
+	
+	
 	Juego()
 	{
 		// Inicializa el objeto entorno
@@ -33,29 +36,92 @@ public class Juego extends InterfaceJuego
 		imgNormal = Herramientas.cargarImagen("mago base.png");
 		imgMurcielago = Herramientas.cargarImagen("murielago.png");
 		anguloFondo = 0;
+		this.juegoTerminado = false;
 		mago = new Mago(400, 300);
 		enemigo = new Enemigo[10];
-		for (int i = 0; i < enemigo.length; i++) {
-			double x = Math.random() * 600;
-			double y = Math.random() * 600;
-			double velocidad = 2 + Math.random();
-			double angulo = Math.random() * 2 * Math.PI;
-			int radio = 13;
-			enemigo[i] = new Enemigo(x, y, velocidad, angulo, radio);}
-		for (int i = 0; i < rocas.length; i++) {
-		    double x = Math.random() * 685;
-		    double y = Math.random() * 600;
-		    rocas[i] = new Roca(x, y);}
 		imgFondo = Herramientas.cargarImagen("suelo.png");
 		barra = new BarraLateral(895, 300);
 		boton = new Boton(752,350, 90, 35); 
 		boton1 = new Boton(752, 390, 90, 35);
-		//poderFuego = new Poderes(x, y, radio);
-		//poderAgua = new Poderes(x, y, radio);
+		
+		   for (int i = 0; i < enemigo.length; i++) {
+		        double x;
+		        double y;
+		        int radio = 13;
+		        int bordeDeAparicion = (int) (Math.random() * 4);
+		        if (bordeDeAparicion == 0) { 
+		            x = Math.random() * entorno.ancho(); 
+		            y = -radio; 
+		        } else if (bordeDeAparicion == 1) { 
+		            x = Math.random() * entorno.ancho(); 
+		            y = entorno.alto() + radio; 
+		        } else if (bordeDeAparicion == 2) { 
+		            x = -radio; 
+		            y = Math.random() * entorno.alto(); 
+		        } else if (bordeDeAparicion == 3) { 
+		            x = entorno.ancho() + radio; 
+		            y = Math.random() * entorno.alto(); 
+		        } else { 
+		            x = 0; y = 0; 
+		        }
+
+		        double velocidad = 2 + Math.random();
+		        double angulo = Math.random() * 2 * Math.PI; 
+		        
+		        enemigo[i] = new Enemigo(x, y, velocidad, angulo, radio);
+		    }
+		   for (int i = 0; i < rocas.length; i++) {
+		    double x = Math.random() * 685;
+		    double y = Math.random() * 600;
+		    rocas[i] = new Roca(x, y);}
+		
+		
 		this.entorno.iniciar();
 		//inicia el juego
 	}
 	
+	private void reiniciarJuego() {
+	    mago = new Mago(400, 300); 
+	    enemigo = new Enemigo[10]; 
+	    for (int a = 0; a < enemigo.length; a++) { 
+	        double x;
+	        double y;
+	        int radio = 13; 
+	        int bordeDeAparicion = (int) (Math.random() * 4); 
+
+	        if (bordeDeAparicion == 0) { 
+	            x = Math.random() * entorno.ancho(); 
+	            y = -radio; 
+	        } else if (bordeDeAparicion == 1) { 
+	            x = Math.random() * entorno.ancho(); 
+	            y = entorno.alto() + radio; 
+	        } else if (bordeDeAparicion == 2) { 
+	            x = -radio; 
+	            y = Math.random() * entorno.alto(); 
+	        } else { 
+	            x = entorno.ancho() + radio; 
+	            y = Math.random() * entorno.alto(); 
+	        }
+	        double velocidad = 2 + Math.random();
+	        double angulo = Math.random() * 2 * Math.PI;
+	        enemigo[a] = new Enemigo(x, y, velocidad, angulo, radio);
+	    }
+	    juegoTerminado = false; 
+	}
+	    
+	// MÉTODO DE COLISIÓN Mago-Enemigo 
+	private boolean colisionMagoEnemigo(Mago mago, Enemigo enemigo) {
+	    double closestX = Math.max(mago.x - mago.ancho / 2, Math.min(enemigo.x, mago.x + mago.ancho / 2));
+	    double closestY = Math.max(mago.y - mago.alto / 2, Math.min(enemigo.y, mago.y + mago.alto / 2));
+
+	    double distX = enemigo.x - closestX;
+	    double distY = enemigo.y - closestY;
+	    double distanciaAlCuadrado = (distX * distX) + (distY * distY);
+
+	    return distanciaAlCuadrado < (enemigo.radio * enemigo.radio);
+	}
+	
+	  
 //COLISION ROCAS Y ENTORNO
 	
 	private boolean hayColision(double xNuevo, double yNuevo, int ancho, int alto, Roca[] rocas) {
@@ -160,27 +226,85 @@ public class Juego extends InterfaceJuego
 	 * (ver el enunciado del TP para mayor detalle).
 	 */
 	public void tick(){
-		entorno.dibujarImagen(imgFondo, 300, 300, anguloFondo, 1.0);
-		movimiento(entorno, rocas);
-		
-		for (Enemigo i : enemigo) {
-		    i.angulo = Math.atan2(mago.y - i.y, mago.x - i.x);
-		    moverEnemigos(i);
-		    if (chocasteCon(entorno)) {
-		        rebotar(i);
-		       }
-		    dibujoEnemigos(i);
-		    acelerar(i);
-			}
-		for (Roca roca : rocas) {
-		    roca.dibujar(entorno);    
-		  }
-		barra.dibujar(entorno);{
-	   }
-		boton.dibujar(entorno);{
-		boton1.dibujar1(entorno);
+	    if (juegoTerminado) {
+	        entorno.cambiarFont("Arial", 50, Color.RED);
+	        entorno.escribirTexto("HAS MUERTO", entorno.ancho() / 2 - 150, entorno.alto() / 2);
+	        entorno.cambiarFont("Arial", 20, Color.WHITE);
+	        entorno.escribirTexto("Presiona Q para reiniciar", entorno.ancho() / 2 - 120, entorno.alto() / 2 + 50);
+	        
+	        if (entorno.estaPresionada('q')) {
+	            reiniciarJuego();
+	        }
+	        return;
+	    }
+	    entorno.dibujarImagen(imgFondo, 300, 300, anguloFondo, 1.0);
+	    movimiento(entorno, rocas);
+	    
+	    // Bucle for para poder reemplazar enemigos
+	    for (int i = 0; i < enemigo.length; i++) { 
+	        Enemigo currentEnemigo = enemigo[i]; 
+	        
+	        currentEnemigo.angulo = Math.atan2(mago.y - currentEnemigo.y, mago.x - currentEnemigo.x);
+	        moverEnemigos(currentEnemigo);
+	        if (chocasteCon(entorno)) { 
+	            rebotar(currentEnemigo);
+	           }
+	        dibujoEnemigos(currentEnemigo);
+	        acelerar(currentEnemigo);
+
+	        if (colisionMagoEnemigo(mago, currentEnemigo)) {
+	            mago.recibirDaño(5); 
+	            
+	            //Crea un nuevo enemigo y reemplazar al que colisionó
+	            double x;
+	            double y;
+	            int radio = 13; 
+	            int bordeDeAparicion = (int) (Math.random() * 4);
+
+	            if (bordeDeAparicion == 0) { 
+	                x = Math.random() * entorno.ancho(); 
+	                y = -radio; 
+	            } else if (bordeDeAparicion == 1) { 
+	                x = Math.random() * entorno.ancho(); 
+	                y = entorno.alto() + radio; 
+	            } else if (bordeDeAparicion == 2) { 
+	                x = -radio; 
+	                y = Math.random() * entorno.alto(); 
+	            } else { 
+	                x = entorno.ancho() + radio; 
+	                y = Math.random() * entorno.alto(); 
+	            }
+	            double velocidad = 2 + Math.random();
+	            double angulo = Math.random() * 2 * Math.PI;
+	            enemigo[i] = new Enemigo(x, y, velocidad, angulo, radio); // Reemplaza al enemigo en el array
+	        }
+	    }	
+	          
+	    if (!mago.estaVivo()) {
+	        juegoTerminado = true;
+	    }
+
+	    for (Roca roca : rocas) {
+	        roca.dibujar(entorno);    
+	    }
+	    barra.dibujar(entorno);
+	    boton.dibujar(entorno);
+	    boton1.dibujar1(entorno);
+	    mago.dibujarBarraDeVida(entorno);
+	    mago.dibujarBarraDeEnergia(entorno); 
+
+	    if(entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
+	        double mx = entorno.mouseX();		
+	        double my = entorno.mouseY();
+	        
+	        if (boton.estaPresionado(mx, my)) {
+	            System.out.println("Poder de Fuego activado");
+	        }
+	        if (boton1.estaPresionado(mx, my)) {
+	            System.out.println("Poder de Agua activado");
+	        }
+	    }
 	}
-  }
     
 	@SuppressWarnings("unused")
 	public static void main(String[] args)

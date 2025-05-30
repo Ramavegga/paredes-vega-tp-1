@@ -31,5 +31,8 @@ public class Boton {
 				e.cambiarFont("Arial", 18, Color.WHITE);
 				e.escribirTexto("AGUA",x - ancho/4, y + alto/6);
 	}
+	public boolean estaPresionado(double px, double py) {
+	    return px >= x - ancho / 2 && px <= x + ancho / 2 && py >= y - alto / 2 && py <= y + alto / 2;
+	}
 
 }
