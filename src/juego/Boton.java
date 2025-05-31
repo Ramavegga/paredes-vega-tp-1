@@ -6,9 +6,6 @@ import entorno.Herramientas;
 import java.awt.Color;
 import java.awt.Image;
 
-
-
-
 public class Boton {
 	double x;
 	double y;

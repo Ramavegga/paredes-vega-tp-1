@@ -14,16 +14,13 @@ public class Enemigo {
 	public int radio;
 	Image imgMurcielago;
 	
-	
-
-	
 	public Enemigo(double x, double y, double velocidad, double angulo, int radio) {
 		this.x = x;
 		this.y = y;
 		this.velocidad = velocidad;
 		this.angulo = angulo;
 		this.radio = radio;
-		imgMurcielago = Herramientas.cargarImagen("murielago.png");
+		imgMurcielago = Herramientas.cargarImagen("murcielago.png");
 			
 		}
 	}
