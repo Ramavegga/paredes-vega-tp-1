@@ -13,7 +13,6 @@ public class BarraLateral {
     public BarraLateral(double x, double y) {
         this.x = x;
         this.y = y;
-
         imgBarra = Herramientas.cargarImagen("barralateral.jpg");
     }
 

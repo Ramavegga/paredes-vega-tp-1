@@ -104,14 +104,4 @@ public class Poderes {
 	public boolean yaTermino() {
 		return System.currentTimeMillis() - this.tiempoCreacion >= DURACION_VISIBLE_MS;
 	}
-	public void dibujar(Entorno e) {
-		e.dibujarRectangulo(x, y, 90, 35, 0, Color.RED);
-		e.cambiarFont("Arial", 15, Color.WHITE);
-		e.escribirTexto("FUEGO", x - 25, y + 5);
-	}
-	public void dibujar1(Entorno e) {
-		e.dibujarRectangulo(x, y, 90, 35, 0, Color.BLUE);
-		e.cambiarFont("Arial", 15, Color.WHITE);
-		e.escribirTexto("AGUA", x - 20, y + 5);
-	}
 }

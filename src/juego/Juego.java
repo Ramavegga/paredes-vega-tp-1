@@ -47,7 +47,7 @@ public class Juego extends InterfaceJuego
 		enemigo = new Enemigo[10]; // El número máximo de enemigos es 10
 		imgFondo = Herramientas.cargarImagen("suelo.png");
 		barra = new BarraLateral(895, 300);
-		boton = new Boton(752,350, 90, 35);
+		boton = new Boton(752,330, 90, 35);
 		boton1 = new Boton(752, 390, 90, 35);
 
 		   for (int i = 0; i < enemigo.length; i++) {
@@ -79,7 +79,9 @@ public class Juego extends InterfaceJuego
 		   for (int i = 0; i < rocas.length; i++) {
 		    double x = Math.random() * 685;
 		    double y = Math.random() * 600;
-		    rocas[i] = new Roca(x, y);}
+		    rocas[i] = new Roca(x, y);
+		    
+		   }
 
 
 		this.entorno.iniciar();
@@ -203,7 +205,7 @@ public class Juego extends InterfaceJuego
 			//entorno.dibujarRectangulo(nuevaX, nuevaY, 50, 75, 0, Color.MAGENTA);
 		}
 	}
-
+	
 //MOVIMIENTO ENEMIGO
 
 	public void moverEnemigos(Enemigo i) {

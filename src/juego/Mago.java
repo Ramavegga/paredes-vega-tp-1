@@ -9,7 +9,6 @@ public class Mago {
 
 	double x;
 	double y;
-	double anguloFondo; // Parece que esto podría ser para el fondo, no para el mago
 	Image imgNormal;
 	Image imgDerecha;
 	Image imgIzquierda;
@@ -35,13 +34,7 @@ public class Mago {
 		imgIzquierda = Herramientas.cargarImagen("magoizquierda.png");
 		imgEspalda = Herramientas.cargarImagen("magoespalda.png");
 		imgFrente = Herramientas.cargarImagen("magofrente.png");
-		anguloFondo = 0; 
 	}
-	
-	public double getX() { return x; }
-	public double getY() { return y; }
-	public int getAncho() { return ancho; }
-	public int getAlto() { return alto; }
 	
 	public void recibirDaño(int cantidad) {
 		this.vida -= cantidad; 
@@ -88,7 +81,7 @@ public class Mago {
         int anchoBarra = 80; 
         int altoBarra = 15;   
         int margenX = 715;     
-        int margenY = 180;     
+        int margenY = 180;
         
         e.dibujarRectangulo(margenX + anchoBarra / 2.0, margenY + altoBarra / 2.0, anchoBarra, altoBarra, 0, Color.DARK_GRAY); 
         double porcentajeEnergia = (double)this.energia / this.ENERGIA_MAXIMA; 

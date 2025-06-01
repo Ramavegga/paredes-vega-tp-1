@@ -11,22 +11,22 @@ public class Boton {
 	double y;
 	int ancho;
 	int alto;
-	
-		public Boton(int x, int y, int ancho, int alto) {
+	Image fuego; 
+	Image agua;
+	public Boton(int x, int y, int ancho, int alto) {
 			this.x = x;
 			this.y = y;
 			this.ancho = ancho;
 			this.alto = alto;
+			fuego = Herramientas.cargarImagen("fuego.png");
+			agua = Herramientas.cargarImagen("agua.png");
 		 }
 	public void dibujar(Entorno e) {
-				e.dibujarRectangulo(x, y, ancho, alto, 0, Color.RED);
-				e.cambiarFont("Arial", 18, Color.ORANGE);
-				e.escribirTexto("FUEGO", x - ancho/3, y + alto/5);
+				e.dibujarImagen(fuego, x, y, 0,0.07);
  }
 	public void dibujar1(Entorno e) {
-				e.dibujarRectangulo(x, y, ancho, alto, 0, Color.BLUE);
-				e.cambiarFont("Arial", 18, Color.WHITE);
-				e.escribirTexto("AGUA",x - ancho/4, y + alto/6);
+				e.dibujarImagen(agua, x, y, 0, 0.07);
+
 	}
 	public boolean estaPresionado(double px, double py) {
 	    return px >= x - ancho / 2 && px <= x + ancho / 2 && py >= y - alto / 2 && py <= y + alto / 2;
